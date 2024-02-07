@@ -41,6 +41,12 @@ def main():
         input_real_ic = "{}/DoublePhoton_FlatPt-5To300_2018ConditionsFlatPU0to70RAW_105X_upgrade2018_realistic_v4-v1_AODSIM_EgRegTreeV5Refined.root".format(args.input_dir)    
         ideal_eventnr_cut = "evt.eventnr%5==0"  #4million photons (we determined 4 million was optimal but after the 2017 was done)
         real_eventnr_cut = "evt.eventnr%5==1" #4million photons (we determined 4 million was optimal but after the 2017 was done)
+    elif args.era=='Run3_2023_UPC':
+        era_name = "Run3_2023_UPC"
+        input_ideal_ic  = "/eos/cms/store/group/phys_heavyions/anstahll/CERN/PbPb2023/EGTree/2024_02_06/PGUN_2023Run3/EGTree_DoublePhoton_FlatPt0p5To50_IdealEcalIC_fwRec_MC_HIRun2023_2024_02_06.root"
+        input_real_ic = "/eos/cms/store/group/phys_heavyions/anstahll/CERN/PbPb2023/EGTree/2024_02_06/PGUN_2023Run3/EGTree_DoublePhoton_FlatPt0p5To50_RealEcalIC_fwRec_MC_HIRun2023_2024_02_06.root"
+        ideal_eventnr_cut = "evt.eventnr%4==0"  #5million photons
+        real_eventnr_cut = "evt.eventnr%4==1" #5million photons
     else:
         raise ValueError("era {} is invalid, options are 2016/2017/2018".format(era))
 
@@ -54,7 +60,7 @@ def main():
     regArgs.cuts_name = "stdCuts"
     regArgs.cuts_base = base_pho_cuts.format(extra_cuts = ideal_eventnr_cut)
     regArgs.cfg_dir = "configs"
-    regArgs.out_dir = "resultsPhoV5" 
+    regArgs.out_dir = args.output_dir+"/resultsPhoV1_"+era_name
     regArgs.ntrees = 1500  
     regArgs.base_name = "regPhoEcal{era_name}_IdealIC_IdealTraining".format(era_name=era_name)
     if run_step1: regArgs.run_eb_and_ee()
@@ -68,7 +74,7 @@ def main():
 
     regArgs.base_name = "regPhoEcal{era_name}_RealIC_IdealTraining".format(era_name=era_name)
     input_for_res_training = str(regArgs.applied_name()) #save the output name before we change it
-    if run_step2: subprocess.Popen(["bin/slc6_amd64_gcc700/RegressionApplierExe",input_real_ic,input_for_res_training,"--gbrForestFileEE",forest_ee_file,"--gbrForestFileEB",forest_eb_file,"--nrThreads","4","--treeName",regArgs.tree_name,"--writeFullTree","1","--regOutTag","Ideal"]).communicate()
+    if run_step2: subprocess.Popen(["bin/slc7_amd64_gcc700/RegressionApplierExe",input_real_ic,input_for_res_training,"--gbrForestFileEE",forest_ee_file,"--gbrForestFileEB",forest_eb_file,"--nrThreads","4","--treeName",regArgs.tree_name,"--writeFullTree","1","--regOutTag","Ideal"]).communicate()
     
     #step3 we now run over re-train with the REAL sample for the sigma, changing the target to have the correction applied 
     print "starting step3"

@@ -46,6 +46,20 @@ def main():
         ideal_eventnr_cut = "evt.eventnr%5==0"  #4million electrons (we determined 4 million was optimal but after the 2017 was done)
         real_eventnr_cut = "evt.eventnr%5==1" #4million electrons (we determined 4 million was optimal but after the 2017 was done)
         ep_eventnr_cut = "evt.eventnr%5==2" #4million electrons (we determined 4 million was optimal but after the 2017 was done)
+    elif args.era=='Run3_2023_UPC':
+        era_name = "Run3_2023_UPC"
+        input_ideal_ic  = "/eos/cms/store/group/phys_heavyions/anstahll/CERN/PbPb2023/EGTree/2024_02_06/PGUN_2023Run3/EGTree_DoubleElectron_FlatPt0p5To50_IdealEcalIC_fwRec_MC_HIRun2023_2024_02_06.root"
+        input_real_ic = "/eos/cms/store/group/phys_heavyions/anstahll/CERN/PbPb2023/EGTree/2024_02_06/PGUN_2023Run3/EGTree_DoubleElectron_FlatPt0p5To50_RealEcalIC_fwRec_MC_HIRun2023_2024_02_06.root"
+        ideal_eventnr_cut = "evt.eventnr%4==0"  #5million electrons
+        real_eventnr_cut = "evt.eventnr%4==1" #5million electrons
+        ep_eventnr_cut = "evt.eventnr%4==2" #5million electrons
+    elif args.era=='Run3_2023_UPC_LowPtGsdEle':
+        era_name = "Run3_2023_UPC_LowPtGsdEle"
+        input_ideal_ic  = "/eos/cms/store/group/phys_heavyions/anstahll/CERN/PbPb2023/EGTree/2024_02_06/PGUN_2023Run3/EGTree_LowPtGsdEle_DoubleElectron_FlatPt0p5To50_IdealEcalIC_fwRec_MC_HIRun2023_2024_02_06.root"
+        input_real_ic = "/eos/cms/store/group/phys_heavyions/anstahll/CERN/PbPb2023/EGTree/2024_02_06/PGUN_2023Run3/EGTree_LowPtGsdEle_DoubleElectron_FlatPt0p5To50_RealEcalIC_fwRec_MC_HIRun2023_2024_02_06.root"
+        ideal_eventnr_cut = "evt.eventnr%4==0"  #5million electrons
+        real_eventnr_cut = "evt.eventnr%4==1" #5million electrons
+        ep_eventnr_cut = "evt.eventnr%4==2" #5million electrons
     else:
         raise ValueError("era {} is invalid, options are 2016/2017/2018".format(era))
 
@@ -62,7 +76,7 @@ def main():
     regArgs.cuts_base = base_ele_cuts.format(extra_cuts = ideal_eventnr_cut)
     regArgs.cuts_name = "stdCuts"
     regArgs.cfg_dir = "configs"
-    regArgs.out_dir = "resultsEleV5" 
+    regArgs.out_dir = args.output_dir+"/resultsEleV1_"+era_name
     regArgs.ntrees = 1500  
     regArgs.base_name = "regEleEcal{era_name}_IdealIC_IdealTraining".format(era_name=era_name)
     if run_step1: regArgs.run_eb_and_ee()
@@ -76,7 +90,7 @@ def main():
 
     regArgs.base_name = "regEleEcal{era_name}_RealIC_IdealTraining".format(era_name=era_name)
     input_for_res_training = str(regArgs.applied_name()) #save the output name before we change it
-    if run_step2: subprocess.Popen(["bin/slc6_amd64_gcc700/RegressionApplierExe",input_real_ic,input_for_res_training,"--gbrForestFileEE",forest_ee_file,"--gbrForestFileEB",forest_eb_file,"--nrThreads","4","--treeName",regArgs.tree_name,"--writeFullTree","1","--regOutTag","Ideal"]).communicate()
+    if run_step2: subprocess.Popen(["bin/slc7_amd64_gcc700/RegressionApplierExe",input_real_ic,input_for_res_training,"--gbrForestFileEE",forest_ee_file,"--gbrForestFileEB",forest_eb_file,"--nrThreads","4","--treeName",regArgs.tree_name,"--writeFullTree","1","--regOutTag","Ideal"]).communicate()
     
     #step3 we now run over re-train with the REAL sample for the sigma, changing the target to have the correction applied 
     print "starting step3"
@@ -102,7 +116,7 @@ def main():
     regArgs.target = "(mc.energy * (ele.trkPModeErr*ele.trkPModeErr + (sc.rawEnergy+sc.rawESEnergy)*(sc.rawEnergy+sc.rawESEnergy)*regRealSigma*regRealSigma) / ( (sc.rawEnergy+sc.rawESEnergy)*regIdealMean*ele.trkPModeErr*ele.trkPModeErr + ele.trkPMode*(sc.rawEnergy+sc.rawESEnergy)*(sc.rawEnergy+sc.rawESEnergy)*regRealSigma*regRealSigma ))"
     regArgs.input_training = input_for_comb
     regArgs.input_testing = input_for_comb
-    regArgs.write_full_tree = "0"  
+    regArgs.write_full_tree = "1"
     regArgs.fix_mean = False
     regArgs.reg_out_tag = "EcalTrk"
     regArgs.cuts_base = base_ele_cuts.format(extra_cuts = ep_eventnr_cut)
@@ -122,7 +136,7 @@ def main():
         regArgs.run_eb_and_ee()
 
         regArgs.base_name = "regEleEcalTrkLowHighPt{era_name}_RealIC".format(era_name=era_name)
-        subprocess.Popen(["bin/slc6_amd64_gcc700/RegressionApplierExe",regArgs.input_testing,regArgs.applied_name(),"--gbrForestFileEB",forest_eb,"--gbrForestFileEE",forest_ee,"--gbrForestFileEBHighEt",forest_eb_highpt,"--gbrForestFileEEHighEt",forest_ee_highpt,"--highEtThres","50.","--nrThreads","4","--treeName",regArgs.tree_name,"--writeFullTree","0"]).communicate()
+        subprocess.Popen(["bin/slc7_amd64_gcc700/RegressionApplierExe",regArgs.input_testing,regArgs.applied_name(),"--gbrForestFileEB",forest_eb,"--gbrForestFileEE",forest_ee,"--gbrForestFileEBHighEt",forest_eb_highpt,"--gbrForestFileEEHighEt",forest_ee_highpt,"--highEtThres","50.","--nrThreads","4","--treeName",regArgs.tree_name,"--writeFullTree","0"]).communicate()
     
         
     
