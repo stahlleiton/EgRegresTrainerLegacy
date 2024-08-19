@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import shutil
 def mvClass(className,package,oldBaseDir):
@@ -16,7 +16,7 @@ def mvClass(className,package,oldBaseDir):
     if os.path.isfile(headerFile): shutil.copy(headerFile,headDst)
     if os.path.isfile(dictFile): shutil.copy(dictFile,dictDst)
     if os.path.isfile(srcFile): shutil.copy(srcFile,srcDst)   
-#    print "would move",className,package,oldBaseDir
+#    print("would move",className,package,oldBaseDir)
 
 import argparse
 
@@ -41,7 +41,7 @@ indexFile = open(args.fileToPkgIndex,'r')
 for line in indexFile:
     line = line.rstrip()
     if len(line.split())<2:
-        print "error, line "+line+" doesnt have a package"
+        print("error, line "+line+" doesnt have a package")
     else:
     
         package=line.split()[1]
@@ -50,11 +50,11 @@ for line in indexFile:
         tempSplit=headerFile.split("/")
         className=tempSplit[len(tempSplit)-1].rstrip(".hh")
         
-     #   print className,package
+     #   print(className,package)
 
         if package in validPackages:
             mvClass(className,package,args.oldCodeBaseDir)
         else:
-            print "package "+package+" for class "+className+" is not valid"
+            print("package "+package+" for class "+className+" is not valid")
 
 

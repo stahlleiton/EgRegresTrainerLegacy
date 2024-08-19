@@ -127,22 +127,22 @@ Regression.1.FixMean: {args.fix_mean}
 
 	# Scram arch has to be set manually
 	# This also must be done in the training script in scripts/
-	arch = "slc7_amd64_gcc700"
+        arch = "el8_amd64_gcc11"
 
-        print "starting: {}".format(self.name())
+        print("starting: {}".format(self.name()))
         subprocess.Popen(["bin/"+arch+"/RegressionTrainerExe",self.cfg_name()]).communicate()
         forest_eb_file = self.output_name()
     
         self.do_eb = False
         self.make_cfg()
-        print "starting: {}".format(self.name())
+        print("starting: {}".format(self.name()))
         subprocess.Popen(["bin/"+arch+"/RegressionTrainerExe",self.cfg_name()]).communicate()
         forest_ee_file = self.output_name()
 
         
         subprocess.Popen(["bin/"+arch+"/RegressionApplierExe",self.input_testing,self.applied_name(),"--gbrForestFileEE",forest_ee_file,"--gbrForestFileEB",forest_eb_file,"--nrThreads","4","--treeName",self.tree_name,"--writeFullTree",self.write_full_tree,"--regOutTag",self.reg_out_tag]).communicate()
 
-        print "made ",self.applied_name()
+        print("made ",self.applied_name())
 
 
     def forest_filenames(self):

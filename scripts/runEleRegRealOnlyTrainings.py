@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import subprocess
 import os
@@ -40,7 +40,7 @@ def main():
 
     
     #step1 train the calo only regression using IDEAL intercalibration constants
-    print "starting step1"
+    print("starting step1")
     regArgs = RegArgs()
     regArgs.input_training = str(input_real_ic)
     regArgs.input_testing = str(input_real_ic)  
@@ -57,7 +57,7 @@ def main():
     
     
     #step2 do the E/p combination
-    print "starting step2"
+    print("starting step2")
     input_for_comb = str(regArgs.applied_name())
 
     regArgs.base_name = "regEleEcalTrk{era_name}_RealIC".format(era_name=era_name)

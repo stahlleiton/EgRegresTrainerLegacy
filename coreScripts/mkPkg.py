@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 
 import sys
@@ -36,6 +36,6 @@ if not os.path.isfile(fullPkgDir+"/package.mk"):
     f.write("STD_LIBS\t+= $("+args.pkgName.upper()+"_LIBNAME)\n")
     f.close()
 else:
-    print "package makefile "+fullPkgDir+"/package.mk exists"
+    print("package makefile "+fullPkgDir+"/package.mk exists")
 
     

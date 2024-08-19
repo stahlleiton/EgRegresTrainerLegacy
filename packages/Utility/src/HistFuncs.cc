@@ -15,6 +15,7 @@
 
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/algorithm/string.hpp>
+#include "set"
 
 int HistFuncs::nrBinsXForEffHist_ = 20;
 float HistFuncs::xMinForEffHist_ = 25;

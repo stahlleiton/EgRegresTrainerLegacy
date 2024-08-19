@@ -4,6 +4,7 @@
 #include "Utility/LogErr.hh"
 #include "Utility/HistFuncs.hh"
 
+#include "TROOT.h"
 #include "TRandom3.h"
 #include "TH2D.h"
 #include "TTree.h"

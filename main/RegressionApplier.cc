@@ -1,5 +1,5 @@
-#include "CondFormats/EgammaObjects/interface/GBRForest.h"
-#include "CondFormats/EgammaObjects/interface/GBRForestD.h"
+#include "CondFormats/GBRForest/interface/GBRForest.h"
+#include "CondFormats/GBRForest/interface/GBRForestD.h"
 
 #include "Utility/HistFuncs.hh"
 #include "Utility/CmdLineInt.hh"

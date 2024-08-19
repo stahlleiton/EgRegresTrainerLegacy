@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import subprocess
 import os
@@ -50,7 +50,7 @@ def main():
     regArgs.cuts_base = base_ele_cuts.format(extra_cuts = ideal_eventnr_cut)
     regArgs.ntrees = 1500
  
-    print """about to run the supercluster regression with: 
+    print("""about to run the supercluster regression with:
     name: {name}
     ideal ic input: {ideal_ic}
     real ic input: {real_ic}
@@ -58,7 +58,7 @@ def main():
 steps to be run:
     step 1: ideal training for mean       = {step1}
     step 2: apply ideal training to real  = {step2}
-    step 3: real training for sigma       = {step3}""".format(name=base_reg_name,ideal_ic=input_ideal_ic,real_ic=input_real_ic,out_dir=args.output_dir,step1=run_step1,step2=run_step2,step3=run_step3)
+    step 3: real training for sigma       = {step3}""".format(name=base_reg_name,ideal_ic=input_ideal_ic,real_ic=input_real_ic,out_dir=args.output_dir,step1=run_step1,step2=run_step2,step3=run_step3))
     time.sleep(20)
 
     if not os.path.exists(args.output_dir):
@@ -76,7 +76,7 @@ steps to be run:
     input_for_input_for_res_training = str(input_real_ic)
     
     # Set scram arch
-    arch = "slc7_amd64_gcc700"
+    arch = "el8_amd64_gcc11"
     if run_step2: subprocess.Popen(["bin/"+arch+"/RegressionApplierExe",input_for_input_for_res_training,input_for_res_training,"--gbrForestFileEE",forest_ee_file,"--gbrForestFileEB",forest_eb_file,"--nrThreads","4","--treeName",regArgs.tree_name,"--writeFullTree","1","--regOutTag","Ideal"]).communicate()
 
     regArgs.base_name = "{}_RealIC_RealTraining".format(base_reg_name)

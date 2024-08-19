@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import argparse
 import subprocess
@@ -14,7 +14,7 @@ if __name__ =='__main__':
     args = parser.parse_args()
 
     
-    base_cmd = "./bin/slc7_amd64_gcc700/RegressionApplierExe {input_file} {output_file} --gbrForestFileEB {gbrEB} --gbrForestFileEE {gbrEE} --nrThreads 4 --writeFullTree 1 --regOutTag {reg_out_tag}"
+    base_cmd = "./bin/el8_amd64_gcc11/RegressionApplierExe {input_file} {output_file} --gbrForestFileEB {gbrEB} --gbrForestFileEE {gbrEE} --nrThreads 4 --writeFullTree 1 --regOutTag {reg_out_tag}"
         
     ecal_ideal_file = "ecalIdealTmp.root"
     ecal_real_file = "ecalRealTmp.root"
@@ -28,7 +28,7 @@ if __name__ =='__main__':
     ideal_args['gbrEE'] = args.ideal.format(region="EE")
     ideal_args['reg_out_tag'] = "Ideal"
     cmd = base_cmd.format(**ideal_args)
-    print cmd
+    print(cmd)
     subprocess.Popen(cmd.split()).communicate()
     
     real_args = {}

@@ -14,12 +14,16 @@ First setup a CMSSW environment. We only link against this so we only need the C
 
 Then clone this repo into a location of your chosing. It does not have to be under $(CMSSW_BASE)/src, in fact it is better that it is not. 
 ```
-git clone git@github.com:cms-egamma/EgRegresTrainerLegacy.git
+cmsrel CMSSW_13_2_12
+cd CMSSW_13_2_12/src
+cmsenv
+git clone git@github.com:stahlleiton/EgRegresTrainerLegacy.git -b Run3_2023_UPC_132X
 cd EgRegresTrainerLegacy 
 gmake RegressionTrainerExe -j 8
 gmake RegressionApplierExe -j 8
 export PATH=$PATH:./bin/$SCRAM_ARCH #add the binary location to path
-export PYTHON27PATH = $PYTHON27PATH:python #adds the python sub dir to python path, this may be PYTHONPATH in some systems 
+export PYTHONPATH=$PYTHONPATH:python
+export ROOT_INCLUDE_PATH=$ROOT_INCLUDE_PATH:$PWD/include
 ```
 
 ## running the regression training
