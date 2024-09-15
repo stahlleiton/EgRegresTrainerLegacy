@@ -38,15 +38,15 @@ def main():
         ep_eventnr_cut = "evt.eventnr%5==2"	# ~4 million electrons
     elif args.era=='Run3_2023_UPC':
         era_name = "Run3_2023_UPC"
-        input_ideal_ic  = "/eos/cms/store/group/phys_heavyions/anstahll/CERN/PbPb2023/NTUple/EGTree/EGTree_DoubleElectron_FlatPt0p5To50_IdealEcalIC_fwRec_MC_HIRun2023_2024_08_18.root"
-        input_real_ic = "/eos/cms/store/group/phys_heavyions/anstahll/CERN/PbPb2023/NTUple/EGTree/EGTree_DoubleElectron_FlatPt0p5To50_RealEcalIC_fwRec_MC_HIRun2023_2024_08_18.root"
+        input_ideal_ic  = "/eos/cms/store/group/phys_heavyions/anstahll/CERN/PbPb2023/NTUple/EGTree/OFFICIAL/EGTree_DoubleElectron_FlatPt0p5To50_IdealEcalIC_fwRec_Official_MC_HIRun2023_2024_09_12.root"
+        input_real_ic = "/eos/cms/store/group/phys_heavyions/anstahll/CERN/PbPb2023/NTUple/EGTree/OFFICIAL/EGTree_DoubleElectron_FlatPt0p5To50_RealEcalIC_fwRec_Official_MC_HIRun2023_2024_09_12.root"
         ideal_eventnr_cut = "evt.eventnr%4==0"  #5million electrons
         real_eventnr_cut = "evt.eventnr%4==1" #5million electrons
         ep_eventnr_cut = "evt.eventnr%4==2" #5million electrons
     elif args.era=='Run3_2023_UPC_LowPtGsdEle':
         era_name = "Run3_2023_UPC_LowPtGsdEle"
-        input_ideal_ic  = "/eos/cms/store/group/phys_heavyions/anstahll/CERN/PbPb2023/NTUple/EGTree/EGTree_LowPtGsfEle_DoubleElectron_FlatPt0p5To50_IdealEcalIC_fwRec_MC_HIRun2023_2024_08_18.root"
-        input_real_ic = "/eos/cms/store/group/phys_heavyions/anstahll/CERN/PbPb2023/NTUple/EGTree/EGTree_LowPtGsfEle_DoubleElectron_FlatPt0p5To50_RealEcalIC_fwRec_MC_HIRun2023_2024_08_18.root"
+        input_ideal_ic  = "/eos/cms/store/group/phys_heavyions/anstahll/CERN/PbPb2023/NTUple/EGTree/OFFICIAL/EGTree_LowPtGsfEle_DoubleElectron_FlatPt0p5To50_IdealEcalIC_fwRec_Official_MC_HIRun2023_2024_09_12.root"
+        input_real_ic = "/eos/cms/store/group/phys_heavyions/anstahll/CERN/PbPb2023/NTUple/EGTree/OFFICIAL/EGTree_LowPtGsfEle_DoubleElectron_FlatPt0p5To50_RealEcalIC_fwRec_Official_MC_HIRun2023_2024_09_12.root"
         ideal_eventnr_cut = "evt.eventnr%4==0"  #5million electrons
         real_eventnr_cut = "evt.eventnr%4==1" #5million electrons
         ep_eventnr_cut = "evt.eventnr%4==2" #5million electrons

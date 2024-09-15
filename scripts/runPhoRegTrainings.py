@@ -35,8 +35,8 @@ def main():
         real_eventnr_cut = "evt.eventnr%5==1"
     elif args.era=='Run3_2023_UPC':
         era_name = "Run3_2023_UPC"
-        input_ideal_ic  = "/eos/cms/store/group/phys_heavyions/anstahll/CERN/PbPb2023/NTUple/EGTree/EGTree_DoublePhoton_FlatPt0p5To50_IdealEcalIC_fwRec_MC_HIRun2023_2024_08_18.root"
-        input_real_ic = "/eos/cms/store/group/phys_heavyions/anstahll/CERN/PbPb2023/NTUple/EGTree/EGTree_DoublePhoton_FlatPt0p5To50_RealEcalIC_fwRec_MC_HIRun2023_2024_08_18.root"
+        input_ideal_ic  = "/eos/cms/store/group/phys_heavyions/anstahll/CERN/PbPb2023/NTUple/EGTree/OFFICIAL/EGTree_DoublePhoton_FlatPt0p5To50_IdealEcalIC_fwRec_Official_MC_HIRun2023_2024_09_12.root"
+        input_real_ic = "/eos/cms/store/group/phys_heavyions/anstahll/CERN/PbPb2023/NTUple/EGTree/OFFICIAL/EGTree_DoublePhoton_FlatPt0p5To50_RealEcalIC_fwRec_Official_MC_HIRun2023_2024_09_12.root"
         ideal_eventnr_cut = "evt.eventnr%4==0"  #5million photons
         real_eventnr_cut = "evt.eventnr%4==1" #5million photons
     else:
